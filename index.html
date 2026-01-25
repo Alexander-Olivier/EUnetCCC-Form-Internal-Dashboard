@@ -47,6 +47,105 @@
             --border: #d1d5db;
         }
 
+        /* Dark mode */
+        [data-theme="dark"] {
+            --primary: #3b82c4;
+            --primary-dark: #1e3a5f;
+            --primary-light: #60a5fa;
+            --accent: #60a5fa;
+            
+            --newsletter-color: #60a5fa;
+            --newsletter-bg: #1e3a5f;
+            --website-color: #f472b6;
+            --website-bg: #4a1942;
+            --socialmedia-color: #2dd4bf;
+            --socialmedia-bg: #134e4a;
+            --adhoc-color: #fbbf24;
+            --adhoc-bg: #78350f;
+            
+            --status-submitted: #34d399;
+            --status-submitted-bg: #064e3b;
+            --status-progress: #a78bfa;
+            --status-progress-bg: #4c1d95;
+            --status-missed: #f87171;
+            --status-missed-bg: #7f1d1d;
+            --status-pending: #9ca3af;
+            --status-pending-bg: #374151;
+            
+            --dark: #f3f4f6;
+            --dark-secondary: #9ca3af;
+            --light-bg: #111827;
+            --white: #1f2937;
+            --border: #374151;
+        }
+
+        [data-theme="dark"] .header {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        }
+
+        [data-theme="dark"] .month-header {
+            background: linear-gradient(to bottom, #1f2937, #111827);
+        }
+
+        [data-theme="dark"] .month-header:hover {
+            background: #374151;
+        }
+
+        [data-theme="dark"] .subtask-item.expanded > .subtask-header {
+            background: #374151;
+        }
+
+        [data-theme="dark"] .subtask-header:hover {
+            background: #283548;
+        }
+
+        [data-theme="dark"] .form-row:hover {
+            background: #374151;
+        }
+
+        [data-theme="dark"] .subtask-forms {
+            background: #111827;
+        }
+
+        [data-theme="dark"] .detail-header {
+            background: #111827;
+        }
+
+        [data-theme="dark"] .nested-item {
+            background: #111827;
+            border-color: var(--border);
+        }
+
+        [data-theme="dark"] .file-item {
+            background: #374151;
+            border-color: var(--border);
+        }
+
+        [data-theme="dark"] .file-item:hover {
+            background: #1f2937;
+        }
+
+        [data-theme="dark"] .tag {
+            background: #374151;
+        }
+
+        [data-theme="dark"] .legend {
+            background: #111827;
+        }
+
+        [data-theme="dark"] .panel-header {
+            background: #1f2937;
+        }
+
+        [data-theme="dark"] .resizer {
+            background: #374151;
+        }
+
+        [data-theme="dark"] .resizer:hover,
+        [data-theme="dark"] .resizer.dragging {
+            background: var(--accent);
+        }
+
         html, body {
             height: 100%;
             font-size: 16px;
@@ -105,6 +204,50 @@
             font-weight: 500;
         }
 
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #ffffff;
+            padding: 0.4rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        .theme-toggle .moon-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            display: none;
+        }
+
         /* Main layout */
         .main-container {
             flex: 1;
@@ -117,12 +260,11 @@
         .left-panel {
             width: 100%;
             max-width: 700px;
-            min-width: 400px;
+            min-width: 300px;
             background: var(--white);
-            border-right: none;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
+            transition: max-width 0.3s ease;
         }
 
         .main-container.panel-open {
@@ -130,9 +272,68 @@
         }
 
         .main-container.panel-open .left-panel {
-            max-width: 420px;
-            border-right: 1px solid var(--border);
-            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+            width: 50%;
+            max-width: none;
+        }
+
+        /* Resizable divider */
+        .resizer {
+            width: 6px;
+            background: var(--border);
+            cursor: col-resize;
+            flex-shrink: 0;
+            transition: background 0.15s;
+            position: relative;
+            display: none;
+        }
+
+        .main-container.panel-open .resizer {
+            display: block;
+        }
+
+        .resizer:hover,
+        .resizer.dragging {
+            background: var(--accent);
+        }
+
+        .resizer::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 40px;
+            background: var(--dark-secondary);
+            border-radius: 2px;
+            opacity: 0.3;
+        }
+
+        .resizer:hover::after,
+        .resizer.dragging::after {
+            opacity: 0.6;
+            background: white;
+        }
+
+        /* Right panel - detail view */
+        .right-panel {
+            flex: 1;
+            min-width: 300px;
+            background: var(--white);
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .main-container.panel-open .right-panel {
+            display: flex;
+        }
+
+        .detail-view {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
         }
 
         .panel-header {
@@ -161,7 +362,7 @@
             gap: 0.75rem;
             padding: 0.75rem 1.25rem;
             border-bottom: 1px solid var(--border);
-            background: #fafbfc;
+            background: var(--light-bg);
             flex-wrap: wrap;
         }
 
@@ -202,13 +403,13 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.75rem 1.25rem;
-            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+            background: var(--light-bg);
             cursor: pointer;
             user-select: none;
         }
 
         .month-header:hover {
-            background: #f1f5f9;
+            background: var(--border);
         }
 
         .month-title {
@@ -251,11 +452,11 @@
         }
 
         .subtask-header:hover {
-            background: #f8fafc;
+            background: rgba(0, 0, 0, 0.03);
         }
 
         .subtask-item.expanded > .subtask-header {
-            background: #f0f4f8;
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .subtask-expand {
@@ -318,7 +519,7 @@
         /* Form rows inside subtask */
         .subtask-forms {
             display: none;
-            background: #fafbfc;
+            background: var(--light-bg);
         }
 
         .subtask-item.expanded .subtask-forms {
@@ -329,13 +530,13 @@
             display: flex;
             align-items: center;
             padding: 0.6rem 1.25rem 0.6rem 3rem;
-            border-top: 1px solid #eef2f6;
+            border-top: 1px solid var(--border);
             cursor: pointer;
             transition: background-color 0.15s;
         }
 
         .form-row:hover {
-            background: #f0f4f8;
+            background: rgba(0, 0, 0, 0.03);
         }
 
         .form-row.active {
@@ -393,32 +594,11 @@
             flex-shrink: 0;
         }
 
-        /* Right panel - detail view */
-        .right-panel {
-            flex: 1;
-            background: var(--white);
-            display: none;
-            flex-direction: column;
-            min-width: 0;
-            height: 100%;
-        }
-
-        .main-container.panel-open .right-panel {
-            display: flex;
-        }
-
-        .detail-view {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            overflow: hidden;
-        }
-
         /* Detail header */
         .detail-header {
             padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border);
-            background: #fafbfc;
+            background: var(--light-bg);
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
@@ -644,7 +824,7 @@
 
         /* Nested items (news, events) */
         .nested-item {
-            background: #fafbfc;
+            background: var(--light-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 1rem;
@@ -691,7 +871,17 @@
                 <div class="logo-mark">EU</div>
                 <span class="logo-text">EUnetCCC</span>
             </a>
-            <span class="header-badge">WP8 Admin Dashboard</span>
+            <div class="header-controls">
+                <span class="header-badge">WP8 Admin Dashboard</span>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+                    <svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                    <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -1565,6 +1755,9 @@
             </div>
         </div>
 
+        <!-- Resizable divider -->
+        <div class="resizer" id="resizer"></div>
+
         <!-- Right Panel - Detail View -->
         <div class="right-panel" id="rightPanel">
             <div class="detail-view" id="detailView">
@@ -1581,11 +1774,6 @@
                         <button class="btn btn-secondary">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                             Download
-                        </button>
-                        <button class="close-panel" onclick="closePanel()">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
                         </button>
                     </div>
                 </div>
@@ -1783,6 +1971,63 @@
                 ]
             }
         };
+
+        // Theme toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        // Resizable panel
+        (function() {
+            const resizer = document.getElementById('resizer');
+            const leftPanel = document.querySelector('.left-panel');
+            const container = document.querySelector('.main-container');
+            
+            let isResizing = false;
+            let startX, startWidth;
+
+            resizer.addEventListener('mousedown', function(e) {
+                if (!container.classList.contains('panel-open')) return;
+                isResizing = true;
+                startX = e.clientX;
+                startWidth = leftPanel.offsetWidth;
+                resizer.classList.add('dragging');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+                
+                const containerWidth = container.offsetWidth;
+                const newWidth = startWidth + (e.clientX - startX);
+                const percentage = (newWidth / containerWidth) * 100;
+                
+                // Limit between 20% and 80%
+                if (percentage >= 20 && percentage <= 80) {
+                    leftPanel.style.width = percentage + '%';
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (isResizing) {
+                    isResizing = false;
+                    resizer.classList.remove('dragging');
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                }
+            });
+        })();
 
         // Toggle month section
         function toggleMonth(header) {
