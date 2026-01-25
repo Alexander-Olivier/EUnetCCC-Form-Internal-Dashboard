@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WP8 Admin Dashboard | EUnetCCC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1e3a5f;
+            --primary-dark: #152a45;
+            --primary-light: #2a4d7a;
+            --accent: #3b82c4;
+            
+            /* Form type colors */
+            --newsletter-color: #1e3a5f;
+            --newsletter-bg: #dbeafe;
+            --website-color: #6B2D5B;
+            --website-bg: #fce7f3;
+            --socialmedia-color: #0f766e;
+            --socialmedia-bg: #ccfbf1;
+            --adhoc-color: #b45309;
+            --adhoc-bg: #fef3c7;
+            
+            /* Status colors */
+            --status-submitted: #059669;
+            --status-submitted-bg: #d1fae5;
+            --status-progress: #8b5cf6;
+            --status-progress-bg: #ede9fe;
+            --status-missed: #dc2626;
+            --status-missed-bg: #fee2e2;
+            --status-pending: #6b7280;
+            --status-pending-bg: #f3f4f6;
+            
+            --dark: #1a1a2e;
+            --dark-secondary: #4a4a5a;
+            --light-bg: #f5f7fa;
+            --white: #ffffff;
+            --border: #d1d5db;
+        }
+
+        html, body {
+            height: 100%;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 0.75rem 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.35rem 0.5rem;
+            border-radius: 5px;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffffff;
+        }
+
+        .header-badge {
+            font-size: 0.8rem;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.35rem 0.75rem;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        /* Main layout */
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+        }
+
+        /* Left panel - submissions list */
+        .left-panel {
+            width: 100%;
+            max-width: 700px;
+            min-width: 400px;
+            background: var(--white);
+            border-right: none;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .main-container.panel-open {
+            justify-content: flex-start;
+        }
+
+        .main-container.panel-open .left-panel {
+            max-width: 420px;
+            border-right: 1px solid var(--border);
+            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        }
+
+        .panel-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--white);
+        }
+
+        .panel-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .panel-subtitle {
+            font-size: 0.85rem;
+            color: var(--dark-secondary);
+            margin-top: 0.15rem;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+            flex-wrap: wrap;
+        }
+
+        .legend-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--dark-secondary);
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .status-tag.submitted { background: var(--status-submitted-bg); color: var(--status-submitted); }
+        .status-tag.progress { background: var(--status-progress-bg); color: var(--status-progress); }
+        .status-tag.missed { background: var(--status-missed-bg); color: var(--status-missed); }
+        .status-tag.pending { background: var(--status-pending-bg); color: var(--status-pending); }
+
+        /* Scrollable list */
+        .submissions-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Month section */
+        .month-section {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .month-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .month-header:hover {
+            background: #f1f5f9;
+        }
+
+        .month-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--dark);
+        }
+
+        .month-stats {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .month-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .month-stat .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .month-stat .dot.submitted { background: var(--status-submitted); }
+        .month-stat .dot.progress { background: var(--status-progress); }
+        .month-stat .dot.missed { background: var(--status-missed); }
+
+        .toggle-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--dark-secondary);
+            transition: transform 0.2s;
+        }
+
+        .month-section.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .month-section.collapsed .month-body {
+            display: none;
+        }
+
+        /* Subtask rows */
+        .subtask-item {
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .subtask-item:last-child {
+            border-bottom: none;
+        }
+
+        .subtask-header {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1.25rem;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .subtask-header:hover {
+            background: #f8fafc;
+        }
+
+        .subtask-item.expanded > .subtask-header {
+            background: #f0f4f8;
+        }
+
+        .subtask-expand {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+        }
+
+        .subtask-expand svg {
+            width: 14px;
+            height: 14px;
+            color: var(--dark-secondary);
+            transition: transform 0.2s;
+        }
+
+        .subtask-item.expanded > .subtask-header .subtask-expand svg {
+            transform: rotate(90deg);
+        }
+
+        .subtask-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+            width: 60px;
+        }
+
+        .subtask-statuses {
+            display: flex;
+            gap: 0.4rem;
+            margin-left: auto;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .form-status-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.2rem 0.45rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .form-status-tag.submitted { background: var(--status-submitted-bg); color: var(--status-submitted); }
+        .form-status-tag.progress { background: var(--status-progress-bg); color: var(--status-progress); }
+        .form-status-tag.missed { background: var(--status-missed-bg); color: var(--status-missed); }
+        .form-status-tag.pending { background: var(--status-pending-bg); color: var(--status-pending); }
+
+        /* Form rows inside subtask */
+        .subtask-forms {
+            display: none;
+            background: #fafbfc;
+        }
+
+        .subtask-item.expanded .subtask-forms {
+            display: block;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1.25rem 0.6rem 3rem;
+            border-top: 1px solid #eef2f6;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .form-row:hover {
+            background: #f0f4f8;
+        }
+
+        .form-row.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .form-row.active .form-name {
+            color: white;
+        }
+
+        .form-row.active .form-meta {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .form-row.active .status-tag {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .form-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .form-dot.newsletter { background: var(--newsletter-color); }
+        .form-dot.website { background: var(--website-color); }
+        .form-dot.socialmedia { background: var(--socialmedia-color); }
+        .form-dot.adhoc { background: var(--adhoc-color); }
+
+        .form-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .form-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--dark);
+        }
+
+        .form-meta {
+            font-size: 0.75rem;
+            color: var(--dark-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .form-row .status-tag {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        /* Right panel - detail view */
+        .right-panel {
+            flex: 1;
+            background: var(--white);
+            display: none;
+            flex-direction: column;
+            min-width: 0;
+            height: 100%;
+        }
+
+        .main-container.panel-open .right-panel {
+            display: flex;
+        }
+
+        .detail-view {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Detail header */
+        .detail-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .detail-title-group {
+            flex: 1;
+        }
+
+        .detail-breadcrumb {
+            font-size: 0.75rem;
+            color: var(--dark-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .detail-title .form-type-badge {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .detail-title .form-type-badge.newsletter { background: var(--newsletter-bg); color: var(--newsletter-color); }
+        .detail-title .form-type-badge.website { background: var(--website-bg); color: var(--website-color); }
+        .detail-title .form-type-badge.socialmedia { background: var(--socialmedia-bg); color: var(--socialmedia-color); }
+        .detail-title .form-type-badge.adhoc { background: var(--adhoc-bg); color: var(--adhoc-color); }
+
+        .detail-meta {
+            font-size: 0.85rem;
+            color: var(--dark-secondary);
+            margin-top: 0.35rem;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-bg);
+            color: var(--dark);
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--dark-secondary);
+            border-radius: 6px;
+        }
+
+        .close-panel:hover {
+            background: var(--light-bg);
+            color: var(--dark);
+        }
+
+        .close-panel svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        /* Detail content */
+        .detail-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .field-group {
+            margin-bottom: 1rem;
+        }
+
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .field-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--dark-secondary);
+            margin-bottom: 0.35rem;
+        }
+
+        .field-value {
+            font-size: 0.95rem;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .field-value a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .field-value a:hover {
+            text-decoration: underline;
+        }
+
+        .field-value.empty {
+            color: var(--dark-secondary);
+            font-style: italic;
+        }
+
+        /* Tags */
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--light-bg);
+            color: var(--dark);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* File list */
+        .file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .file-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .file-item:hover {
+            background: white;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .file-item svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Nested items (news, events) */
+        .nested-item {
+            background: #fafbfc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .nested-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .nested-item .field-group {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Confirmation checkmark */
+        .confirmation-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            background: var(--status-submitted-bg);
+            color: var(--status-submitted);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .confirmation-check svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-mark">EU</div>
+                <span class="logo-text">EUnetCCC</span>
+            </a>
+            <span class="header-badge">WP8 Admin Dashboard</span>
+        </div>
+    </header>
+
+    <div class="main-container" id="mainContainer">
+        <!-- Left Panel - Submissions List -->
+        <div class="left-panel">
+            <div class="panel-header">
+                <h1 class="panel-title">Submissions</h1>
+                <p class="panel-subtitle">Select a form to view details</p>
+            </div>
+
+            <div class="legend">
+                <span class="legend-title">Status:</span>
+                <span class="status-tag submitted">Submitted</span>
+                <span class="status-tag progress">In Progress</span>
+                <span class="status-tag missed">Missed</span>
+                <span class="status-tag pending">Pending</span>
+            </div>
+
+            <div class="submissions-list">
+                <!-- January 2026 -->
+                <div class="month-section">
+                    <div class="month-header" onclick="toggleMonth(this)">
+                        <span class="month-title">January 2026</span>
+                        <div class="month-stats">
+                            <span class="month-stat"><span class="dot submitted"></span> 14</span>
+                            <span class="month-stat"><span class="dot progress"></span> 8</span>
+                            <span class="month-stat"><span class="dot missed"></span> 2</span>
+                        </div>
+                        <svg class="toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="month-body">
+                        <!-- 8.2.1 -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.1</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted">Newsletter</span>
+                                    <span class="form-status-tag progress">Social</span>
+                                    <span class="form-status-tag submitted">Website</span>
+                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('821-newsletter', this)" data-id="821-newsletter">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Maria Santos • IOC Barcelona</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('821-socialmedia', this)" data-id="821-socialmedia">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Maria Santos • IOC Barcelona</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('821-website', this)" data-id="821-website">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Maria Santos • IOC Barcelona</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('821-adhoc', this)" data-id="821-adhoc">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">No submission</div>
+                                    </div>
+                                    <span class="status-tag pending">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.2 -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.2</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted">Newsletter</span>
+                                    <span class="form-status-tag submitted">Social</span>
+                                    <span class="form-status-tag progress">Website</span>
+                                    <span class="form-status-tag submitted">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('822-newsletter', this)" data-id="822-newsletter">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Pierre Dubois • Institut Curie</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('822-socialmedia', this)" data-id="822-socialmedia">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Pierre Dubois • Institut Curie</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('822-website', this)" data-id="822-website">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Pierre Dubois • Institut Curie</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('822-adhoc', this)" data-id="822-adhoc">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Pierre Dubois • Brochure request</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.3 -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.3</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag progress">Newsletter</span>
+                                    <span class="form-status-tag submitted">Social</span>
+                                    <span class="form-status-tag submitted">Website</span>
+                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('823-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Marco Rossi • IEO Milan</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('823-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Marco Rossi • IEO Milan</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('823-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Marco Rossi • IEO Milan</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('823-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">No submission</div>
+                                    </div>
+                                    <span class="status-tag pending">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.4 -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.4</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted">Newsletter</span>
+                                    <span class="form-status-tag missed">Social</span>
+                                    <span class="form-status-tag progress">Website</span>
+                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('824-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Anna Müller • Charité Berlin</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('824-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Deadline passed</div>
+                                    </div>
+                                    <span class="status-tag missed">Missed</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('824-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Anna Müller • Charité Berlin</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('824-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">No submission</div>
+                                    </div>
+                                    <span class="status-tag pending">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.5 through 8.2.8 abbreviated -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.5</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted">Newsletter</span>
+                                    <span class="form-status-tag submitted">Social</span>
+                                    <span class="form-status-tag submitted">Website</span>
+                                    <span class="form-status-tag submitted">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('825-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Sofia Kowalski • NIO Warsaw</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('825-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Sofia Kowalski • NIO Warsaw</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('825-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Sofia Kowalski • NIO Warsaw</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('825-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Sofia Kowalski • Event promotion</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.6</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag progress">Newsletter</span>
+                                    <span class="form-status-tag progress">Social</span>
+                                    <span class="form-status-tag pending">Website</span>
+                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('826-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Henrik Lindgren • Karolinska</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('826-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Henrik Lindgren • Karolinska</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('826-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">No submission</div>
+                                    </div>
+                                    <span class="status-tag pending">Pending</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('826-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">No submission</div>
+                                    </div>
+                                    <span class="status-tag pending">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.7</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted">Newsletter</span>
+                                    <span class="form-status-tag submitted">Social</span>
+                                    <span class="form-status-tag submitted">Website</span>
+                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('827-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Elena Petrova • Petrov NMRC</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('827-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Elena Petrova • Petrov NMRC</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('827-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Elena Petrova • Petrov NMRC</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('827-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">No submission</div>
+                                    </div>
+                                    <span class="status-tag pending">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.8</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag missed">Newsletter</span>
+                                    <span class="form-status-tag progress">Social</span>
+                                    <span class="form-status-tag progress">Website</span>
+                                    <span class="form-status-tag submitted">Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('828-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Deadline passed</div>
+                                    </div>
+                                    <span class="status-tag missed">Missed</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('828-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">João Silva • IPO Lisbon</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('828-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">João Silva • IPO Lisbon</div>
+                                    </div>
+                                    <span class="status-tag progress">In Progress</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('828-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">João Silva • Graphics request</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- December 2025 (collapsed) -->
+                <div class="month-section collapsed">
+                    <div class="month-header" onclick="toggleMonth(this)">
+                        <span class="month-title">December 2025</span>
+                        <div class="month-stats">
+                            <span class="month-stat"><span class="dot submitted"></span> 28</span>
+                            <span class="month-stat"><span class="dot progress"></span> 0</span>
+                            <span class="month-stat"><span class="dot missed"></span> 4</span>
+                        </div>
+                        <svg class="toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="month-body">
+                        <!-- December subtasks would go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Detail View -->
+        <div class="right-panel" id="rightPanel">
+            <div class="detail-view" id="detailView">
+                <div class="detail-header">
+                    <div class="detail-title-group">
+                        <div class="detail-breadcrumb" id="detailBreadcrumb">January 2026 • Task 8.2.1</div>
+                        <h2 class="detail-title">
+                            <span id="detailFormType">Newsletter</span>
+                            <span class="form-type-badge newsletter" id="detailBadge">Newsletter</span>
+                        </h2>
+                        <p class="detail-meta" id="detailMeta">Submitted by Maria Santos • January 15, 2026 at 10:32 AM</p>
+                    </div>
+                    <div class="detail-actions">
+                        <button class="btn btn-secondary">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            Download
+                        </button>
+                        <button class="close-panel" onclick="closePanel()">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-content" id="detailContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for submissions
+        const submissionsData = {
+            '821-newsletter': {
+                type: 'newsletter',
+                subtask: '8.2.1',
+                month: 'January 2026',
+                status: 'submitted',
+                contact: { name: 'Maria Santos', email: 'maria.santos@ioc-barcelona.org', institution: 'IOC Barcelona' },
+                submittedAt: 'January 15, 2026 at 10:32 AM',
+                sections: [
+                    {
+                        title: 'Section 1: Contact Information',
+                        fields: [
+                            { label: 'Full Name', value: 'Maria Santos' },
+                            { label: 'Email', value: 'maria.santos@ioc-barcelona.org' },
+                            { label: 'Institution', value: 'IOC Barcelona' }
+                        ]
+                    },
+                    {
+                        title: 'Section 2: Monthly Update',
+                        fields: [
+                            { label: 'Headline', value: 'New Immunotherapy Research Program Launched' },
+                            { label: 'Description', value: 'Our center has officially launched a groundbreaking immunotherapy research program focused on rare cancers. The initiative brings together 15 specialists from across Europe and will conduct clinical trials for novel CAR-T cell therapies targeting solid tumors. This represents one of the largest collaborative efforts in rare cancer research on the continent.' },
+                            { label: 'Related Links', value: '<a href="#">https://ioc-barcelona.org/immunotherapy</a><br><a href="#">https://ioc-barcelona.org/research-team</a>', isHtml: true },
+                            { label: 'Files', value: ['press-release.pdf', 'team-photo.jpg', 'research-overview.pptx'], isFiles: true }
+                        ]
+                    },
+                    {
+                        title: 'Section 3: News & Announcements',
+                        items: [
+                            {
+                                fields: [
+                                    { label: 'News Headline', value: 'Partnership with University of Barcelona Announced' },
+                                    { label: 'Description', value: 'A new academic partnership will enable joint research projects and student exchange programs focused on oncology. The collaboration includes shared laboratory access and joint funding applications.' }
+                                ]
+                            },
+                            {
+                                fields: [
+                                    { label: 'News Headline', value: 'Dr. Garcia Wins European Research Award' },
+                                    { label: 'Description', value: 'Our lead researcher has been recognized for outstanding contributions to cancer genomics. The prestigious award acknowledges 15 years of pioneering work in tumor sequencing.' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Section 4: Upcoming Events',
+                        items: [
+                            {
+                                fields: [
+                                    { label: 'Event Name', value: 'Annual Symposium 2026' },
+                                    { label: 'Date', value: 'March 15-17, 2026' },
+                                    { label: 'Location', value: 'Barcelona, Spain' },
+                                    { label: 'Description', value: 'Three-day symposium bringing together leading oncologists from across Europe to discuss the latest advances in cancer treatment. Expected attendance: 500+ participants.' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Section 5: Additional Comments',
+                        fields: [
+                            { label: '', value: 'Please consider featuring our symposium prominently in the newsletter as we expect significant attendance from network partners. We can provide additional promotional materials if needed.' }
+                        ]
+                    }
+                ]
+            },
+            '821-socialmedia': {
+                type: 'socialmedia',
+                subtask: '8.2.1',
+                month: 'January 2026',
+                status: 'progress',
+                contact: { name: 'Maria Santos', email: 'maria.santos@ioc-barcelona.org', institution: 'IOC Barcelona' },
+                submittedAt: 'Last saved: January 18, 2026 at 3:45 PM',
+                sections: [
+                    {
+                        title: 'Section 1: Contact Information',
+                        fields: [
+                            { label: 'Full Name', value: 'Maria Santos' },
+                            { label: 'Email', value: 'maria.santos@ioc-barcelona.org' },
+                            { label: 'Institution', value: 'IOC Barcelona' }
+                        ]
+                    },
+                    {
+                        title: 'Section 2: Social Media Content',
+                        fields: [
+                            { label: 'Headline', value: 'World Cancer Day Campaign' },
+                            { label: 'Content', value: 'On #WorldCancerDay, IOC Barcelona reaffirms its commitment to fighting cancer through research, care, and education. Together, we can close the care gap! 🎗️ #CloseTheCareGap #CancerResearch #EUnetCCC' },
+                            { label: 'Related Links', value: '<em class="empty">Not yet provided</em>', isHtml: true },
+                            { label: 'Files', value: '<em class="empty">Not yet provided</em>', isHtml: true }
+                        ]
+                    },
+                    {
+                        title: 'Section 3: Additional Comments',
+                        fields: [
+                            { label: '', value: '<em class="empty">None</em>', isHtml: true }
+                        ]
+                    }
+                ]
+            },
+            '821-website': {
+                type: 'website',
+                subtask: '8.2.1',
+                month: 'January 2026',
+                status: 'submitted',
+                contact: { name: 'Maria Santos', email: 'maria.santos@ioc-barcelona.org', institution: 'IOC Barcelona' },
+                submittedAt: 'January 12, 2026 at 11:20 AM',
+                sections: [
+                    {
+                        title: 'Section 1: Contact Information',
+                        fields: [
+                            { label: 'Full Name', value: 'Maria Santos' },
+                            { label: 'Email', value: 'maria.santos@ioc-barcelona.org' },
+                            { label: 'Institution', value: 'IOC Barcelona' }
+                        ]
+                    },
+                    {
+                        title: 'Section 2: Website Media Content',
+                        fields: [
+                            { label: 'Content Type', value: 'Video' },
+                            { label: 'Title', value: 'Lab Tour with Dr. Garcia' },
+                            { label: 'Description', value: 'A comprehensive 8-minute tour of our state-of-the-art genomics laboratory, guided by Dr. Garcia. The video showcases our latest equipment including next-generation sequencing machines, liquid biopsy analysis systems, and our bioinformatics analysis center. Ideal for sharing on the EUnetCCC website to demonstrate member facilities.' },
+                            { label: 'Video URL', value: '<a href="#">https://youtube.com/watch?v=abc123xyz</a>', isHtml: true },
+                            { label: 'Files', value: ['video-thumbnail.jpg', 'video-transcript.pdf', 'equipment-list.xlsx'], isFiles: true }
+                        ]
+                    },
+                    {
+                        title: 'Section 3: Additional Comments',
+                        fields: [
+                            { label: '', value: 'Please add subtitles in Spanish if possible for our local audience. We can provide the Spanish translation of the transcript if needed.' }
+                        ]
+                    }
+                ]
+            },
+            '822-adhoc': {
+                type: 'adhoc',
+                subtask: '8.2.2',
+                month: 'January 2026',
+                status: 'submitted',
+                contact: { name: 'Pierre Dubois', email: 'p.dubois@curie.fr', institution: 'Institut Curie' },
+                submittedAt: 'January 10, 2026 at 9:45 AM',
+                sections: [
+                    {
+                        title: 'Section 1: Contact Information',
+                        fields: [
+                            { label: 'Full Name', value: 'Pierre Dubois' },
+                            { label: 'Email', value: 'p.dubois@curie.fr' },
+                            { label: 'Institution', value: 'Institut Curie' }
+                        ]
+                    },
+                    {
+                        title: 'Section 2: Task Overview',
+                        fields: [
+                            { label: 'Task Title', value: 'Patient Support Program Brochure' },
+                            { label: 'What do you need?', value: ['Brochure'], isTags: true }
+                        ]
+                    },
+                    {
+                        title: 'Section 3: Task Description',
+                        fields: [
+                            { label: 'Description', value: 'We need a patient-friendly brochure explaining our new comprehensive support program for cancer survivors. The brochure should be available in French and English, and include information about psychological support services, nutritional guidance, physical rehabilitation programs, and peer support groups. The tone should be warm and reassuring while remaining informative.' },
+                            { label: 'Related Links', value: '<a href="#">https://curie.fr/patient-support</a><br><a href="#">https://curie.fr/survivorship-program</a>', isHtml: true },
+                            { label: 'Files', value: ['program-overview.docx', 'curie-logo.png', 'brand-guidelines.pdf', 'existing-content.docx'], isFiles: true },
+                            { label: 'Target Audience', value: ['Patients & families', 'Healthcare professionals'], isTags: true }
+                        ]
+                    },
+                    {
+                        title: 'Section 4: Timeline',
+                        fields: [
+                            { label: 'Deadline Requested', value: 'February 15, 2026' }
+                        ]
+                    },
+                    {
+                        title: 'Section 5: Additional Comments',
+                        fields: [
+                            { label: '', value: 'We plan to distribute 500 printed copies at our patient welcome center. Digital version also needed for our website. Would appreciate if we could review a draft before final production.' }
+                        ]
+                    },
+                    {
+                        title: 'Section 6: Confirmation',
+                        fields: [
+                            { label: '', value: '✓ Confirmed: All relevant information and documents provided.', isConfirmation: true }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Toggle month section
+        function toggleMonth(header) {
+            const section = header.closest('.month-section');
+            section.classList.toggle('collapsed');
+        }
+
+        // Toggle subtask expansion
+        function toggleSubtask(header) {
+            const item = header.closest('.subtask-item');
+            item.classList.toggle('expanded');
+        }
+
+        // Show detail panel
+        function showDetail(id, rowElement) {
+            const data = submissionsData[id];
+            const mainContainer = document.getElementById('mainContainer');
+
+            // Remove active class from all rows
+            document.querySelectorAll('.form-row.active').forEach(row => row.classList.remove('active'));
+            
+            // Add active class to clicked row
+            rowElement.classList.add('active');
+
+            // Open panel
+            mainContainer.classList.add('panel-open');
+
+            if (data) {
+                // Update header
+                document.getElementById('detailBreadcrumb').textContent = `${data.month} • Task ${data.subtask}`;
+                document.getElementById('detailFormType').textContent = getFormTypeName(data.type);
+                
+                const badge = document.getElementById('detailBadge');
+                badge.textContent = getFormTypeName(data.type);
+                badge.className = `form-type-badge ${data.type}`;
+                
+                const statusText = data.status === 'progress' ? 'Started' : 'Submitted';
+                document.getElementById('detailMeta').textContent = `${statusText} by ${data.contact.name} • ${data.submittedAt}`;
+
+                // Build content
+                let contentHtml = '';
+                data.sections.forEach(section => {
+                    contentHtml += `<div class="detail-section">`;
+                    contentHtml += `<h3 class="section-title">${section.title}</h3>`;
+                    
+                    if (section.items) {
+                        // Nested items (news, events)
+                        section.items.forEach(item => {
+                            contentHtml += `<div class="nested-item">`;
+                            item.fields.forEach(field => {
+                                contentHtml += buildFieldHtml(field);
+                            });
+                            contentHtml += `</div>`;
+                        });
+                    } else if (section.fields) {
+                        section.fields.forEach(field => {
+                            contentHtml += buildFieldHtml(field);
+                        });
+                    }
+                    
+                    contentHtml += `</div>`;
+                });
+
+                document.getElementById('detailContent').innerHTML = contentHtml;
+            } else {
+                // Show placeholder for submissions without data
+                document.getElementById('detailBreadcrumb').textContent = `January 2026 • Task ${id.split('-')[0].replace('8', '8.')}`;
+                document.getElementById('detailFormType').textContent = getFormTypeName(id.split('-')[1]);
+                const badge = document.getElementById('detailBadge');
+                badge.textContent = getFormTypeName(id.split('-')[1]);
+                badge.className = `form-type-badge ${id.split('-')[1]}`;
+                document.getElementById('detailMeta').textContent = 'Submission details';
+                document.getElementById('detailContent').innerHTML = `
+                    <div style="text-align: center; color: var(--dark-secondary); padding: 3rem;">
+                        <p>Detailed submission data would be loaded from your backend system.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Build field HTML
+        function buildFieldHtml(field) {
+            let html = `<div class="field-group">`;
+            
+            if (field.label) {
+                html += `<div class="field-label">${field.label}</div>`;
+            }
+            
+            if (field.isFiles) {
+                html += `<div class="file-list">`;
+                field.value.forEach(file => {
+                    html += `<a href="#" class="file-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                        ${file}
+                    </a>`;
+                });
+                html += `</div>`;
+            } else if (field.isTags) {
+                html += `<div class="tag-list">`;
+                field.value.forEach(tag => {
+                    html += `<span class="tag">${tag}</span>`;
+                });
+                html += `</div>`;
+            } else if (field.isConfirmation) {
+                html += `<div class="confirmation-check">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>${field.value}</span>
+                </div>`;
+            } else if (field.isHtml) {
+                html += `<div class="field-value">${field.value}</div>`;
+            } else {
+                html += `<div class="field-value">${field.value}</div>`;
+            }
+            
+            html += `</div>`;
+            return html;
+        }
+
+        // Get form type display name
+        function getFormTypeName(type) {
+            const names = {
+                'newsletter': 'Newsletter',
+                'socialmedia': 'Social Media',
+                'website': 'Website',
+                'adhoc': 'Ad Hoc Task Request'
+            };
+            return names[type] || type;
+        }
+
+        // Close panel
+        function closePanel() {
+            const mainContainer = document.getElementById('mainContainer');
+            mainContainer.classList.remove('panel-open');
+
+            // Remove active class from all rows
+            document.querySelectorAll('.form-row.active').forEach(row => row.classList.remove('active'));
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePanel();
+            }
+        });
+    </script>
+</body>
+</html>
