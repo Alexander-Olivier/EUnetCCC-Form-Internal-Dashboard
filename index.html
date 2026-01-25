@@ -217,33 +217,12 @@
             color: var(--dark);
         }
 
-        .month-stats {
-            display: flex;
-            gap: 0.75rem;
-            font-size: 0.75rem;
-        }
-
-        .month-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .month-stat .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .month-stat .dot.submitted { background: var(--status-submitted); }
-        .month-stat .dot.progress { background: var(--status-progress); }
-        .month-stat .dot.missed { background: var(--status-missed); }
-
         .toggle-icon {
             width: 16px;
             height: 16px;
             color: var(--dark-secondary);
             transition: transform 0.2s;
+            margin-left: auto;
         }
 
         .month-section.collapsed .toggle-icon {
@@ -315,12 +294,20 @@
         }
 
         .form-status-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
             font-size: 0.65rem;
             font-weight: 600;
             padding: 0.2rem 0.45rem;
             border-radius: 4px;
             text-transform: uppercase;
             letter-spacing: 0.02em;
+        }
+
+        .form-status-tag svg {
+            width: 10px;
+            height: 10px;
         }
 
         .form-status-tag.submitted { background: var(--status-submitted-bg); color: var(--status-submitted); }
@@ -729,11 +716,6 @@
                 <div class="month-section">
                     <div class="month-header" onclick="toggleMonth(this)">
                         <span class="month-title">January 2026</span>
-                        <div class="month-stats">
-                            <span class="month-stat"><span class="dot submitted"></span> 14</span>
-                            <span class="month-stat"><span class="dot progress"></span> 8</span>
-                            <span class="month-stat"><span class="dot missed"></span> 2</span>
-                        </div>
                         <svg class="toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
@@ -749,10 +731,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.1</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag submitted">Newsletter</span>
-                                    <span class="form-status-tag progress">Social</span>
-                                    <span class="form-status-tag submitted">Website</span>
-                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag pending"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -801,10 +783,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.2</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag submitted">Newsletter</span>
-                                    <span class="form-status-tag submitted">Social</span>
-                                    <span class="form-status-tag progress">Website</span>
-                                    <span class="form-status-tag submitted">Ad Hoc</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -853,10 +835,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.3</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag progress">Newsletter</span>
-                                    <span class="form-status-tag submitted">Social</span>
-                                    <span class="form-status-tag submitted">Website</span>
-                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag pending"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -905,10 +887,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.4</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag submitted">Newsletter</span>
-                                    <span class="form-status-tag missed">Social</span>
-                                    <span class="form-status-tag progress">Website</span>
-                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag missed"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Social</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Website</span>
+                                    <span class="form-status-tag pending"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -957,10 +939,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.5</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag submitted">Newsletter</span>
-                                    <span class="form-status-tag submitted">Social</span>
-                                    <span class="form-status-tag submitted">Website</span>
-                                    <span class="form-status-tag submitted">Ad Hoc</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -1008,10 +990,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.6</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag progress">Newsletter</span>
-                                    <span class="form-status-tag progress">Social</span>
-                                    <span class="form-status-tag pending">Website</span>
-                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Newsletter</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Social</span>
+                                    <span class="form-status-tag pending"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>Website</span>
+                                    <span class="form-status-tag pending"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -1059,10 +1041,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.7</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag submitted">Newsletter</span>
-                                    <span class="form-status-tag submitted">Social</span>
-                                    <span class="form-status-tag submitted">Website</span>
-                                    <span class="form-status-tag pending">Ad Hoc</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag pending"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -1110,10 +1092,10 @@
                                 </div>
                                 <span class="subtask-name">8.2.8</span>
                                 <div class="subtask-statuses">
-                                    <span class="form-status-tag missed">Newsletter</span>
-                                    <span class="form-status-tag progress">Social</span>
-                                    <span class="form-status-tag progress">Website</span>
-                                    <span class="form-status-tag submitted">Ad Hoc</span>
+                                    <span class="form-status-tag missed"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Newsletter</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Social</span>
+                                    <span class="form-status-tag progress"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
                                 </div>
                             </div>
                             <div class="subtask-forms">
@@ -1158,17 +1140,426 @@
                 <div class="month-section collapsed">
                     <div class="month-header" onclick="toggleMonth(this)">
                         <span class="month-title">December 2025</span>
-                        <div class="month-stats">
-                            <span class="month-stat"><span class="dot submitted"></span> 28</span>
-                            <span class="month-stat"><span class="dot progress"></span> 0</span>
-                            <span class="month-stat"><span class="dot missed"></span> 4</span>
-                        </div>
                         <svg class="toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </div>
                     <div class="month-body">
-                        <!-- December subtasks would go here -->
+                        <!-- 8.2.1 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.1</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-821-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Maria Santos • IOC Barcelona</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-821-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Maria Santos • IOC Barcelona</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-821-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Maria Santos • IOC Barcelona</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-821-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Maria Santos • Holiday campaign graphics</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.2 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.2</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag missed"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-822-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Pierre Dubois • Institut Curie</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-822-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Pierre Dubois • Institut Curie</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-822-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Pierre Dubois • Institut Curie</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-822-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Deadline passed</div>
+                                    </div>
+                                    <span class="status-tag missed">Missed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.3 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.3</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-823-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Marco Rossi • IEO Milan</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-823-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Marco Rossi • IEO Milan</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-823-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Marco Rossi • IEO Milan</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-823-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Marco Rossi • Year-end report design</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.4 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.4</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag missed"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag missed"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-824-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Anna Müller • Charité Berlin</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-824-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Deadline passed</div>
+                                    </div>
+                                    <span class="status-tag missed">Missed</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-824-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Anna Müller • Charité Berlin</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-824-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Deadline passed</div>
+                                    </div>
+                                    <span class="status-tag missed">Missed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.5 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.5</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-825-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Sofia Kowalski • NIO Warsaw</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-825-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Sofia Kowalski • NIO Warsaw</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-825-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Sofia Kowalski • NIO Warsaw</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-825-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Sofia Kowalski • Conference poster</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.6 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.6</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-826-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Henrik Lindgren • Karolinska</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-826-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Henrik Lindgren • Karolinska</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-826-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Henrik Lindgren • Karolinska</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-826-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Henrik Lindgren • Newsletter template</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.7 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.7</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-827-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">Elena Petrova • Petrov NMRC</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-827-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">Elena Petrova • Petrov NMRC</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-827-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Elena Petrova • Petrov NMRC</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-827-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">Elena Petrova • Research publication</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8.2.8 December -->
+                        <div class="subtask-item">
+                            <div class="subtask-header" onclick="toggleSubtask(this)">
+                                <div class="subtask-expand">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                                <span class="subtask-name">8.2.8</span>
+                                <div class="subtask-statuses">
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Newsletter</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Social</span>
+                                    <span class="form-status-tag missed"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Website</span>
+                                    <span class="form-status-tag submitted"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>Ad Hoc</span>
+                                </div>
+                            </div>
+                            <div class="subtask-forms">
+                                <div class="form-row" onclick="showDetail('dec-828-newsletter', this)">
+                                    <span class="form-dot newsletter"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Newsletter</div>
+                                        <div class="form-meta">João Silva • IPO Lisbon</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-828-socialmedia', this)">
+                                    <span class="form-dot socialmedia"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Social Media</div>
+                                        <div class="form-meta">João Silva • IPO Lisbon</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-828-website', this)">
+                                    <span class="form-dot website"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Website</div>
+                                        <div class="form-meta">Deadline passed</div>
+                                    </div>
+                                    <span class="status-tag missed">Missed</span>
+                                </div>
+                                <div class="form-row" onclick="showDetail('dec-828-adhoc', this)">
+                                    <span class="form-dot adhoc"></span>
+                                    <div class="form-info">
+                                        <div class="form-name">Ad Hoc</div>
+                                        <div class="form-meta">João Silva • Annual review graphics</div>
+                                    </div>
+                                    <span class="status-tag submitted">Submitted</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
